@@ -2,17 +2,6 @@
 #include <stdio.h>
 #include <stdbool.h>
 #include <string.h>
-//protocol version
-#define version 6
-//device address on network
-#define addr 53
-/**
- * SkyCOM source code
- * 
- * 
- * 
- * 
-**/
 
 bool DataBits[1024];    //holds the DataBits
 bool SetpBits[188];     //holds address bits [2+10+4+(adresses(10)*16)+6+8]
@@ -20,8 +9,9 @@ bool sum[16] = {0};     //holds added binary values (checksum)
 int  spot = 0;          //cursor in data array
 int  PkgCnt = 0;        //count of value and string packages
 int  DtaCnt = 0;        //count of commands
-int  Ver = version;
-int TX_addr = addr;
+int  Ver = 1;           //set version
+int TX_addr = 0;        //set default addresses
+
 //to the power funtion bc I can't be arsed to include math.h
 //I googled if it s assed or arsed
 double power(int base, int exp){
@@ -117,6 +107,10 @@ void AddCmnd(bool Byt[4], int var){
     DECtoBIN(var,8,spot,0);     //add actual bit value
     
     spot = spot + 8;            //move cursor 8byte
+}
+
+void StartCOM(int addr){
+
 }
 
 //add an ID to the message

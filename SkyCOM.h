@@ -1,6 +1,8 @@
 #ifndef SkyCOM_H_   /* Include guard */
 #define SkyCOM_H_
 
+void StartCOM(int addr);
+
 void DtaID(int val);
 void DtaSct(int val);
 void DtaReq(int val);
