@@ -109,8 +109,9 @@ void AddCmnd(bool Byt[4], int var){
     spot = spot + 8;            //move cursor 8byte
 }
 
-void StartCOM(int addr){
-
+void StartCOM(int addr, int protocol){
+    Ver = protocol;
+    TX_addr = addr;
 }
 
 //add an ID to the message
