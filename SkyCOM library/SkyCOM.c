@@ -247,7 +247,7 @@ void AddVal(float val){
     PkgCnt++;
 }
 
-void SendMsg(int RX_addrs[16]){     //address array, MUST be an initialized 16 enttity array
+void GenrMsg(int RX_addrs[16]){     //address array, MUST be an initialized 16 enttity array
     int addrs;
 
     for(int i = 0; i < 16; i++){
@@ -375,4 +375,12 @@ void SendMsg(int RX_addrs[16]){     //address array, MUST be an initialized 16 e
 ////////////////////////////////////////////////////////////////
     spot = 0;
     PkgCnt = 0;
+}
+
+int GetBit(int bit){
+    if(bit == -1){
+        return MsgLenght + 20;
+    } else{
+        return FullMessage[bit];
+    }
 }

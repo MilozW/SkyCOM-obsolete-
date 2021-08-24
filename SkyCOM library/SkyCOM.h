@@ -12,6 +12,8 @@ void AddErr(int A, int B);
 void AddStr(char Msg[]);
 void AddVal(float val);
 
-void SendMsg(int RX_addrs[16]);
+void GenrMsg(int RX_addrs[16]);
+
+int  GetBit(int bit);
 
 #endif
