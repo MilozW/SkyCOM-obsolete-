@@ -40,10 +40,12 @@ SkyCOM is designed to work with RS485 or ttl electronic standards and the librar
 
 ## transmitting
 ---
+
+**TEMPORY FUNCTION**
 ```
 StartCOM(addr, version)
 ```
-this sets the device address, which, at the moment, is static and the users firmware version. this is all included in the protocol so if interpertation of structures or other data changes over time, this is a build in way to make sure devices will be incompatable.
+this sets the device address, which, at the moment, is static and the users firmware version. this is all included in the protocol so if interpertation of data structs or data changes over time, this is a build in way to make sure devices will be incompatable.
 ```
 AddVal(val)
 ```
@@ -55,19 +57,79 @@ AddStr adds, a string, to the message
 ```
 DtaSct(code)
 ```
-DtaSct sets the message structure, this is an optional value send along with the data setting (part of) its structure. the value send as struct can be interpreted by the users firmware and bound to according message processing.
+DtaSct sets the message structure, this value **can** be send along with the data to communicate its structure to the reciever(s). the value send as struct can be interpreted by the users firmware and bound to the according message processing and data interpretation.
+
+*accepts 0-255*
 ```
 DtaReq(code)
 ```
-DtaReq sends a data request with a data code. this code is interpreted by the users firmware and you can use this for infrequent data requests. Can be used in combination with a structure
+DtaReq adds a data request command to the message. this code can be interpreted by the reciever and may be used to prompt it to return certain data.
+
+*accepts 0-255*
 ```
 AddERR(code)
 ```
 add an error code to the message.
+
+*accepts 0-255*
 ```
 DtaID(code)
 ```
-Same function as a struct and could be used to extend funtion of a struct, but it's main purpouse is to send an ID along with known values.
+works simularly as DtaStct function but is meant to be inserted before a single package.
+
+*accepts 0-255*
+
+```
+int addrs[16] = {5,8,32,75,0,0,0,0,0,0,0,0,0,0,0,0};
+GenrMsg(addrs)
+```
+the GenrMsg function generates the bits to be transmitted. the function takes an array of integers and passes them on as recievers.
+
+The array must be initialized to 0 and have 16 entities
+
+## transmission
+```
+SendMsg(BpS)
+```
+Since this library is meant to work on any uC and different IDE's use different pin function commands, the actual transmitting is done with the SendMsg function and must be adapted by the user to the user's IDE.
+
+The bitrate can be set when usign the function in bits per second.
+```
+//SendMsg function, user must put microcontroller specific lines in this function to work.
+//TTL + CLK function! no RS485 (yet)
+void SendMsg(int BpS){
+    //convert bits per second to delay, in this case BitDelay is in mS
+    int BitDelay = BpS / 1000;
+
+    for(int i = 0; i < GetBit(-1); i++){
+        //put here your uC's CLK pin HIGH line
+
+        //put here your uC's delay line with "2 ms" as value
+        
+        //put here your uC's CLK pin LOW line
+
+        if(GetBit[i] == 0){
+            //put here your uC's TX pin LOW line
+
+        }
+        else if(GetBit[i] == 1){
+            //put here your uC's TX pin HIGH line
+
+        }
+        //put here your uC's delay line with "BitDelay" as value
+    
+    }
+}
+
+void main(){
+    StartCOM(2,6);          //start protocol, device address 2, protocol 6
+    AddStr("Hello there");  //add string package
+
+    int addrs[16] = {5,8,32,75,0,0,0,0,0,0,0,0,0,0,0,0};
+    GenrMsg(addrs);         //generate message bits
+    SendMsg(100);           //transmit message at a 100 bit/second bitrate
+}
+```
 
 ## recieving
 ---
