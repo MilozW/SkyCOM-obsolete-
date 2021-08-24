@@ -2,11 +2,44 @@
 
 SkyCOM is an advanced serial communications protocol for communication between microcontroller systems on a network.
 
-Made after getting ptsd from working with RS232 and intended for industrial machine applications or microcontroller networks where commands and values need to be send on a network.
+Origins start when working with RS232 with industrial CNC machines.
 
-this project is a work in progress and under active development. Not finished yet, USE AT OWN RISK!
+Designed for microcontroller on a network where commands and values need to be reliably send over a network.
+
+**this project is a work in progress and under active development. Not finished yet, USE AT OWN RISK!**
+
+## _features_
+* reliable data transmission on a network
+* no string manipulation neccesairy
+* efficient
+* build in system commands
+
+## _supported datatypes_
+* integer
+* floating point
+* ascii strings
+
+## _TODO_
+
+### short term
+* merge TX and RX library's
+* get comm between uC working w/ clock
+* get comm between uC working w/o clock
+
+### long term
+* auto addressing
+
 
 # how to use the SkyCOM library
+
+## hardware
+
+---
+SkyCOM is designed to work with RS485 or ttl electronic standards and the library directly supports and manages RE (Reciever Enable) and DE (Drive Enable) outputs for use with RS485 IC's
+
+
+## transmitting
+---
 ```
 StartCOM(addr, version)
 ```
@@ -35,6 +68,10 @@ add an error code to the message.
 DtaID(code)
 ```
 Same function as a struct and could be used to extend funtion of a struct, but it's main purpouse is to send an ID along with known values.
+
+## recieving
+---
+
 
 # License
 MIT License
